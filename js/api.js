@@ -3,9 +3,8 @@
  */
 
 const API_CONFIG = {
-    // Altere para a URL do seu backend em produção
-    // Ex: "https://seu-backend.onrender.com"
-    baseUrl: "http://localhost:8000",
+    // URL do seu backend em produção no Render
+    baseUrl: "https://agentespedagogicos.onrender.com",
 };
 
 /**
