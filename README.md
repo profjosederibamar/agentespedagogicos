@@ -83,12 +83,11 @@ O servidor estará disponível em `http://localhost:8000`
 
 ### 4. Abra o Frontend
 
-Abra o arquivo `frontend/index.html` diretamente no navegador.
+Abra o arquivo `index.html` diretamente no navegador (ele está na raiz do projeto).
 
 Ou use um servidor local:
 
 ```bash
-cd frontend
 python -m http.server 3000
 ```
 
@@ -116,16 +115,15 @@ HUGGINGFACE_API_KEY=sua_chave_aqui
 ## 📁 Estrutura de Pastas
 
 ```
-├── frontend/
-│   ├── index.html          # Página principal SPA
-│   ├── css/styles.css      # Design system completo
-│   ├── js/
-│   │   ├── app.js          # Lógica principal
-│   │   ├── agents.js       # Definições das práticas
-│   │   ├── api.js          # Comunicação com backend
-│   │   ├── pdf.js          # Geração de PDF
-│   │   └── history.js      # Histórico (localStorage)
-│   └── assets/favicon.svg
+├── index.html              # Página principal SPA (Frontend)
+├── css/styles.css          # Design system completo
+├── js/
+│   ├── app.js              # Lógica principal
+│   ├── agents.js           # Definições das práticas
+│   ├── api.js              # Comunicação com backend
+│   ├── pdf.js              # Geração de PDF
+│   └── history.js          # Histórico (localStorage)
+├── assets/                 # Ícones e robôs 3D
 │
 ├── backend/
 │   ├── main.py             # Servidor FastAPI

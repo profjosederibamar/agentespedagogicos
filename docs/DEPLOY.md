@@ -69,11 +69,11 @@ Sua API estará em: `https://agentes-pedagogicos-api.onrender.com`
 
 ### Passo 1: Atualizar URL do backend
 
-Edite o arquivo `frontend/js/api.js` e atualize a URL:
+Edite o arquivo `js/api.js` (na raiz do projeto) e atualize a URL:
 
 ```javascript
 const API_CONFIG = {
-    baseUrl: "https://agentes-pedagogicos-api.onrender.com",
+    baseUrl: "https://agentespedagogicos.onrender.com",
 };
 ```
 
@@ -83,15 +83,13 @@ const API_CONFIG = {
 2. Clique em **Settings → Pages**
 3. Em **Source**, selecione:
    - **Branch**: `main`
-   - **Folder**: `/frontend` (se disponível, caso contrário `/root`)
+   - **Folder**: `/ (root)`
 4. Clique em **"Save"**
 
 ### Passo 3: Aguardar publicação
 
-O GitHub vai gerar uma URL como:
-`https://seu-usuario.github.io/Agentes-de-IA-Educacionais/`
-
-> Se a pasta for `/root`, acesse: `https://seu-usuario.github.io/Agentes-de-IA-Educacionais/frontend/`
+O GitHub vai gerar a URL:
+`https://profjosederibamar.github.io/agentespedagogicos/`
 
 ---
 
