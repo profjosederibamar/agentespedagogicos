@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma de Agentes Pedagógicos Inteligentes — Gere sequências didáticas incríveis com IA para práticas pedagógicas inovadoras.">
+    <title>Agentes Pedagógicos Inteligentes</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- jsPDF para geração de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- NAVIGATION BAR                                         -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo" id="nav-logo">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">Agentes <span class="gradient-text">Pedagógicos</span></span>
+            </div>
+            <div class="navbar-links">
+                <button class="nav-link active" id="nav-home">Início</button>
+                <button class="nav-link" id="nav-practices">Práticas</button>
+                <button class="nav-link" id="nav-history">Histórico</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <!-- TELA 1: HERO / LANDING                                 -->
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <section id="hero-section" class="section active">
+        <div class="hero-bg">
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            <div class="hero-orb hero-orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">🤖 Inteligência Artificial na Educação</div>
+            <h1 class="hero-title">
+                Agentes Pedagógicos
+                <span class="gradient-text">Inteligentes</span>
+            </h1>
+            <p class="hero-subtitle">
+                Crie sequências didáticas incríveis com o poder da IA. Escolha uma prática pedagógica 
+                inovadora e receba uma sequência completa, interdisciplinar e pronta para aplicar em sala de aula.
+            </p>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <span class="hero-feature-icon">🎯</span>
+                    <span>9 Práticas Pedagógicas</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="hero-feature-icon">🧠</span>
+                    <span>Agentes de IA Especializados</span>
+                </div>
+                <div class="hero-feature">
+                    <span class="hero-feature-icon">📄</span>
+                    <span>Exportação em PDF</span>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <button id="btn-start" class="btn btn-primary btn-lg">
+                    <span>✨</span> Criar Sequência Didática
+                </button>
+                <button id="btn-history" class="btn btn-outline btn-lg">
+                    <span>📚</span> Histórico
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TELA 2: SELEÇÃO DE PRÁTICA PEDAGÓGICA                 -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section id="practices-section" class="section">
+        <div class="container">
+            <button class="btn-back" id="btn-back-practices">
+                <span>←</span> Voltar
+            </button>
+            <div class="section-header">
+                <h2 class="section-title">Escolha a Prática Pedagógica</h2>
+                <p class="section-desc">Selecione a abordagem que melhor se adapta aos seus objetivos de ensino.</p>
+            </div>
+            <div id="practices-grid" class="practices-grid">
+                <!-- Gerado dinamicamente pelo JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TELA 3: FORMULÁRIO DE ENTRADA                          -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section id="form-section" class="section">
+        <div class="container">
+            <button class="btn-back" id="btn-back-form">
+                <span>←</span> Voltar
+            </button>
+            <div class="section-header">
+                <div id="selected-practice-badge" class="practice-badge"></div>
+                <h2 class="section-title">Configure sua Sequência</h2>
+                <p class="section-desc">Preencha os dados abaixo para gerar uma sequência didática personalizada.</p>
+            </div>
+            <form id="sequence-form" class="sequence-form">
+                <div class="form-group">
+                    <label for="tema" class="form-label">
+                        📝 Tema da Aula <span class="required">*</span>
+                    </label>
+                    <input type="text" id="tema" name="tema" class="form-input" 
+                           placeholder="Ex: Sistema Solar, Frações, Revolução Industrial..."
+                           required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faixa-etaria" class="form-label">
+                            👥 Faixa Etária <span class="required">*</span>
+                        </label>
+                        <select id="faixa-etaria" name="faixa_etaria" class="form-select" required>
+                            <option value="">Selecione...</option>
+                            <option value="6-8 anos (1º-3º ano)">6-8 anos (1º-3º ano)</option>
+                            <option value="9-11 anos (4º-5º ano)">9-11 anos (4º-5º ano)</option>
+                            <option value="11-14 anos (6º-9º ano)">11-14 anos (6º-9º ano)</option>
+                            <option value="15-17 anos (Ensino Médio)">15-17 anos (Ensino Médio)</option>
+                            <option value="18+ anos (EJA / Superior)">18+ anos (EJA / Superior)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tempo" class="form-label">
+                            ⏱️ Tempo de Aula <span class="required">*</span>
+                        </label>
+                        <select id="tempo" name="tempo" class="form-select" required>
+                            <option value="">Selecione...</option>
+                            <option value="30 minutos">30 minutos</option>
+                            <option value="45 minutos">45 minutos</option>
+                            <option value="50 minutos">50 minutos</option>
+                            <option value="1 hora">1 hora</option>
+                            <option value="1 hora e 30 minutos">1 hora e 30 minutos</option>
+                            <option value="2 horas">2 horas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modelo" class="form-label">
+                        🤖 Modelo do Agente de IA
+                    </label>
+                    <select id="modelo" name="modelo" class="form-select">
+                        <option value="auto" selected>🔄 Automático (recomendado)</option>
+                        <option value="gemini">✨ Google Gemini Flash</option>
+                        <option value="groq">⚡ Groq / Llama 3</option>
+                        <option value="huggingface">🧠 HuggingFace / Mistral</option>
+                    </select>
+                    <span class="form-hint">O modo Automático tenta o melhor modelo disponível.</span>
+                </div>
+                <div class="form-group">
+                    <label for="objetivos" class="form-label">
+                        🎯 Objetivos Específicos <span class="optional">(opcional)</span>
+                    </label>
+                    <textarea id="objetivos" name="objetivos" class="form-textarea" rows="3"
+                              placeholder="Ex: Desenvolver pensamento crítico, trabalho em equipe, compreensão de conceitos..."></textarea>
+                </div>
+                <button type="submit" id="btn-generate" class="btn btn-primary btn-lg btn-full">
+                    <span>🚀</span> Gerar Sequência Didática
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TELA 4: LOADING                                        -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section id="loading-section" class="section">
+        <div class="loading-container">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-icon">🧠</div>
+            </div>
+            <h2 class="loading-title">O Agente está trabalhando...</h2>
+            <p id="loading-message" class="loading-message">Analisando a prática pedagógica...</p>
+            <div class="loading-bar">
+                <div class="loading-bar-fill" id="loading-bar-fill"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TELA 5: RESULTADO                                      -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section id="result-section" class="section">
+        <div class="container">
+            <div class="result-header">
+                <button class="btn-back" id="btn-back-result">
+                    <span>←</span> Nova Sequência
+                </button>
+                <div class="result-actions">
+                    <button id="btn-regenerate" class="btn btn-secondary">
+                        <span>🔄</span> Gerar Novamente
+                    </button>
+                    <button id="btn-download-pdf" class="btn btn-secondary">
+                        <span>📥</span> Baixar PDF
+                    </button>
+                    <button id="btn-edit-toggle" class="btn btn-outline">
+                        <span>✏️</span> Editar
+                    </button>
+                </div>
+            </div>
+            <div id="result-content" class="result-content">
+                <!-- Gerado dinamicamente pelo JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TELA 6: HISTÓRICO                                      -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section id="history-section" class="section">
+        <div class="container">
+            <button class="btn-back" id="btn-back-history">
+                <span>←</span> Voltar
+            </button>
+            <div class="section-header">
+                <h2 class="section-title">📚 Histórico de Sequências</h2>
+                <p class="section-desc">Veja e acesse suas sequências didáticas geradas anteriormente.</p>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- Gerado dinamicamente pelo JS -->
+            </div>
+            <div id="history-empty" class="history-empty" style="display:none;">
+                <div class="empty-icon">📭</div>
+                <h3>Nenhuma sequência no histórico</h3>
+                <p>Crie sua primeira sequência didática para vê-la aqui!</p>
+                <button class="btn btn-primary" id="btn-history-create">
+                    <span>✨</span> Criar Sequência
+                </button>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TOAST NOTIFICATIONS                                     -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/agents.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

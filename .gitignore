@@ -1,0 +1,23 @@
+# ═══════════════════════════════════════════
+# SEGURANÇA: Nunca enviar para o GitHub!
+# ═══════════════════════════════════════════
+.env
+*.env
+backend/.env
+backend/venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
