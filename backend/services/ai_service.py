@@ -1,7 +1,7 @@
 """
 ai_service.py — Roteador Multi-Provider de IA.
 Despacha o prompt para o provedor de IA selecionado pelo usuário.
-Modo "auto": tenta Gemini → Groq → HuggingFace → Template (fallback).
+Modo "auto": tenta Gemini → Groq → HuggingFace.
 """
 import os
 from dotenv import load_dotenv
@@ -25,7 +25,7 @@ async def generate_with_ai(prompt: str, modelo: str = "auto") -> tuple[dict | No
     """
     Roteador principal. Retorna (resultado, provider_usado).
     - Se modelo == "auto": tenta todos os providers em sequência.
-    - Se modelo específico: tenta apenas aquele, com fallback para template.
+    - Se modelo específico: tenta apenas aquele.
     """
     if modelo == "auto":
         return await _auto_generate(prompt)
@@ -70,5 +70,5 @@ async def _auto_generate(prompt: str) -> tuple[dict | None, str]:
         return (result, "huggingface")
 
     # 4. Todos falharam
-    print("[AI Router] ❌ Todos os provedores falharam. Usando template.")
+    print("[AI Router] ❌ Todos os provedores de IA falharam.")
     return (None, "none")

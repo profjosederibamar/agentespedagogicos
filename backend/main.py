@@ -15,7 +15,6 @@ from typing import Optional
 
 from agents import AGENTS
 from services.ai_service import generate_with_ai
-from services.template_service import generate_from_template
 
 # ─── FastAPI App ──────────────────────────────────────────────
 app = FastAPI(
@@ -75,7 +74,7 @@ async def list_practices():
 async def generate_sequence(request: GenerateRequest):
     """
     Gera uma sequência didática baseada na prática pedagógica escolhida.
-    Tenta usar IA primeiro, faz fallback para templates se necessário.
+    Utiliza exclusivamente agentes de Inteligência Artificial.
     """
     if request.practice not in AGENTS:
         raise HTTPException(
@@ -98,25 +97,21 @@ async def generate_sequence(request: GenerateRequest):
     modelo = request.modelo or "auto"
     result, provider_used = await generate_with_ai(prompt, modelo=modelo)
 
-    # Fallback para template se IA falhar
-    source = "ai"
+    # Verifica se a geração falhou
     if result is None:
-        result = generate_from_template(
-            practice=request.practice,
-            tema=request.tema,
-            faixa_etaria=request.faixa_etaria,
-            tempo=request.tempo,
-            objetivos=request.objetivos or "",
+        raise HTTPException(
+            status_code=503,
+            detail="Todos os nossos agentes de IA estão muito ocupados no momento. "
+                   "Aguarde um minuto e tente gerar novamente! 🤖✨",
         )
-        source = "template"
-        provider_used = "template"
+
+    source = "ai"
 
     # Mapa de nomes amigáveis dos provedores
     provider_labels = {
         "gemini": "🤖 Google Gemini Flash",
         "groq": "⚡ Groq / Llama 3",
         "huggingface": "🧠 HuggingFace / Mistral",
-        "template": "📋 Template Inteligente",
     }
 
     return {
