@@ -59,10 +59,20 @@ async def generate_with_gemini(prompt: str) -> dict | None:
                     if parts:
                         text = parts[0].get("text", "")
                         return _parse_response(text)
-                print("[Gemini] Resposta vazia ou sem candidatos.")
+                print(f"[Gemini] Resposta vazia ou sem candidatos: {result}")
                 return None
             else:
-                print(f"[Gemini] Erro na API: {response.status_code} - {response.text[:300]}")
+                error_msg = response.text
+                print(f"[Gemini] Erro na API: Status {response.status_code}")
+                print(f"[Gemini] Detalhes do erro: {error_msg[:500]}")
+                
+                if response.status_code == 429:
+                    print("[Gemini] MOTIVO: Limite de requisições atingido (Rate Limit). Aguarde um momento ou use o Groq.")
+                elif response.status_code == 403:
+                    print("[Gemini] MOTIVO: Chave inválida ou permissão negada. Verifique se a chave está configurada corretamente no Render.")
+                elif response.status_code == 404:
+                    print("[Gemini] MOTIVO: Modelo não encontrado ou endpoint inválido.")
+                
                 return None
 
     except Exception as e:
