@@ -12,11 +12,12 @@ load_dotenv()
 
 HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "")
 AI_MODEL = os.getenv("AI_MODEL", "mistralai/Mixtral-8x7B-Instruct-v0.1")
-HF_API_URL = f"https://api-inference.huggingface.co/models/{AI_MODEL}"
+# Novo endpoint recomendado pelo Hugging Face (Router v1)
+HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 
 async def generate_with_huggingface(prompt: str) -> dict | None:
     """
-    Envia prompt para a API do Hugging Face e retorna JSON.
+    Envia prompt para a API do Hugging Face (via Router) e retorna JSON.
     Retorna None se falhar (para fallback).
     """
     if not HF_API_KEY or HF_API_KEY.startswith("hf_SEU_TOKEN"):
@@ -28,15 +29,15 @@ async def generate_with_huggingface(prompt: str) -> dict | None:
         "Content-Type": "application/json",
     }
 
-    # Formatando para Mistral (Instrução)
+    # Formatando para o novo Router (compatível com OpenAI Chat)
     payload = {
-        "inputs": f"<s>[INST] {prompt} [/INST]",
-        "parameters": {
-            "max_new_tokens": 3000,
-            "temperature": 0.7,
-            "top_p": 0.9,
-            "return_full_text": False,
-        },
+        "model": AI_MODEL,
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 3000,
+        "response_format": {"type": "json_object"} if "JSON" in prompt else None
     }
 
     try:
@@ -45,8 +46,10 @@ async def generate_with_huggingface(prompt: str) -> dict | None:
 
             if response.status_code == 200:
                 result = response.json()
-                if isinstance(result, list) and len(result) > 0:
-                    text = result[0].get("generated_text", "")
+                # O formato do Router Chat retorna choices[0].message.content
+                choices = result.get("choices", [])
+                if choices:
+                    text = choices[0].get("message", {}).get("content", "")
                     return _parse_response(text)
                 return None
             else:
